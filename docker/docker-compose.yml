@@ -1,0 +1,59 @@
+## Docker Compose configuration for MLOps certification tests
+## Orchestrates a FastAPI service and isolated test containers
+## (authentication, authorization, content validation)
+
+version: "3.9"
+
+services:
+
+  ## FastAPI sentiment analysis service
+  api-sentiment:
+    image: datascientest/fastapi:1.0.0
+    container_name: api-sentiment
+    ports:
+      - "8000:8000"
+    networks:
+      - api-network
+
+  ## Authentication tests container
+  auth-test:
+    build: auth_test
+    container_name: auth-test
+    environment:
+      - LOG=1
+    volumes:
+      - ./logs:/logs
+    depends_on:
+      - api-sentiment
+    networks:
+      - api-network
+
+  ## Authorization tests container
+  authorization-test:
+    build: authorization_test
+    container_name: authorization-test
+    environment:
+      - LOG=1
+    volumes:
+      - ./logs:/logs
+    depends_on:
+      - api-sentiment
+    networks:
+      - api-network
+
+  ## Content validation tests container
+  content-test:
+    build: content_test
+    container_name: content-test
+    environment:
+      - LOG=1
+    volumes:
+      - ./logs:/logs
+    depends_on:
+      - api-sentiment
+    networks:
+      - api-network
+
+## Shared Docker network for API and test containers
+networks:
+  api-network:
