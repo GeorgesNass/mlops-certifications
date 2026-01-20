@@ -12,13 +12,24 @@ local_*/
 tmp/
 
 ## (Optional) Ensure logs/tmp are ignored
+
+docker/.*/
 docker/logs/
 docker/tmp/
 docker/log.txt
+airflow/.*/
 airflow/tmp/
 airflow/logs/
 airflow/plugins/
+linux-jq/.*/
 linux-jq/tmp/
+drift-monitoring/.*/
+drift-monitoring/tmp/
+drift-monitoring/logs/
+drift-monitoring/data/
+drift-monitoring/models/
+drift-monitoring/reports/
+
 
 ## === Common folders and files to ignore ===
 __pycache__/
