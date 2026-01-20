@@ -28,6 +28,7 @@ drift-monitoring/logs/
 drift-monitoring/data/
 drift-monitoring/models/
 drift-monitoring/reports/
+drift-monitoring/evidently_workspace/
 
 ## === Common folders and files to ignore ===
 __pycache__/
