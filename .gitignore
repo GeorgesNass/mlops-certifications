@@ -18,6 +18,7 @@ docker/log.txt
 airflow/tmp/
 airflow/logs/
 airflow/plugins/
+linux-jq/tmp/
 
 ## === Common folders and files to ignore ===
 __pycache__/
