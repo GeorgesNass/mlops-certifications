@@ -1,0 +1,400 @@
+[
+  {
+    "birth_year": "112BBY",
+    "created": "2014-12-10T15:10:51.357000Z",
+    "edited": "2014-12-20T21:17:50.309000Z",
+    "eye_color": "yellow",
+    "films": [
+      "http://swapi.co/api/films/5/",
+      "http://swapi.co/api/films/4/",
+      "http://swapi.co/api/films/6/",
+      "http://swapi.co/api/films/3/",
+      "http://swapi.co/api/films/2/",
+      "http://swapi.co/api/films/1/"
+    ],
+    "gender": "n/a",
+    "hair_color": "n/a",
+    "height": 167,
+    "homeworld": "http://swapi.co/api/planets/1/",
+    "id": 2,
+    "mass": "75",
+    "name": "C-3PO",
+    "skin_color": "gold",
+    "species": [
+      "http://swapi.co/api/species/2/"
+    ],
+    "starships": [],
+    "url": "http://swapi.co/api/people/2/",
+    "vehicles": []
+  },
+  {
+    "birth_year": "47BBY",
+    "created": "2014-12-10T15:53:41.121000Z",
+    "edited": "2014-12-20T21:17:50.319000Z",
+    "eye_color": "blue",
+    "films": [
+      "http://swapi.co/api/films/5/",
+      "http://swapi.co/api/films/6/",
+      "http://swapi.co/api/films/1/"
+    ],
+    "gender": "female",
+    "hair_color": "brown",
+    "height": 165,
+    "homeworld": "http://swapi.co/api/planets/1/",
+    "id": 7,
+    "mass": "75",
+    "name": "Beru Whitesun lars",
+    "skin_color": "light",
+    "species": [
+      "http://swapi.co/api/species/1/"
+    ],
+    "starships": [],
+    "url": "http://swapi.co/api/people/7/",
+    "vehicles": []
+  },
+  {
+    "birth_year": "21BBY",
+    "created": "2014-12-12T11:08:06.469000Z",
+    "edited": "2014-12-20T21:17:50.341000Z",
+    "eye_color": "hazel",
+    "films": [
+      "http://swapi.co/api/films/3/",
+      "http://swapi.co/api/films/2/",
+      "http://swapi.co/api/films/1/"
+    ],
+    "gender": "male",
+    "hair_color": "brown",
+    "height": 170,
+    "homeworld": "http://swapi.co/api/planets/22/",
+    "id": 18,
+    "mass": "77",
+    "name": "Wedge Antilles",
+    "skin_color": "fair",
+    "species": [
+      "http://swapi.co/api/species/1/"
+    ],
+    "starships": [
+      "http://swapi.co/api/starships/12/"
+    ],
+    "url": "http://swapi.co/api/people/18/",
+    "vehicles": [
+      "http://swapi.co/api/vehicles/14/"
+    ]
+  },
+  {
+    "birth_year": "82BBY",
+    "created": "2014-12-15T12:48:05.971000Z",
+    "edited": "2014-12-20T21:17:50.347000Z",
+    "eye_color": "yellow",
+    "films": [
+      "http://swapi.co/api/films/5/",
+      "http://swapi.co/api/films/4/",
+      "http://swapi.co/api/films/6/",
+      "http://swapi.co/api/films/3/",
+      "http://swapi.co/api/films/2/"
+    ],
+    "gender": "male",
+    "hair_color": "grey",
+    "height": 170,
+    "homeworld": "http://swapi.co/api/planets/8/",
+    "id": 21,
+    "mass": "75",
+    "name": "Palpatine",
+    "skin_color": "pale",
+    "species": [
+      "http://swapi.co/api/species/1/"
+    ],
+    "starships": [],
+    "url": "http://swapi.co/api/people/21/",
+    "vehicles": []
+  },
+  {
+    "birth_year": "unknown",
+    "created": "2014-12-18T11:26:18.541000Z",
+    "edited": "2014-12-20T21:17:50.371000Z",
+    "eye_color": "black",
+    "films": [
+      "http://swapi.co/api/films/3/"
+    ],
+    "gender": "male",
+    "hair_color": "none",
+    "height": 160,
+    "homeworld": "http://swapi.co/api/planets/33/",
+    "id": 31,
+    "mass": "68",
+    "name": "Nien Nunb",
+    "skin_color": "grey",
+    "species": [
+      "http://swapi.co/api/species/10/"
+    ],
+    "starships": [
+      "http://swapi.co/api/starships/10/"
+    ],
+    "url": "http://swapi.co/api/people/31/",
+    "vehicles": []
+  },
+  {
+    "birth_year": "91BBY",
+    "created": "2014-12-19T17:21:45.915000Z",
+    "edited": "2014-12-20T21:17:50.379000Z",
+    "eye_color": "blue",
+    "films": [
+      "http://swapi.co/api/films/4/"
+    ],
+    "gender": "male",
+    "hair_color": "blond",
+    "height": 170,
+    "homeworld": "http://swapi.co/api/planets/9/",
+    "id": 34,
+    "mass": "unknown",
+    "name": "Finis Valorum",
+    "skin_color": "fair",
+    "species": [
+      "http://swapi.co/api/species/1/"
+    ],
+    "starships": [],
+    "url": "http://swapi.co/api/people/34/",
+    "vehicles": []
+  },
+  {
+    "birth_year": "46BBY",
+    "created": "2014-12-19T17:28:26.926000Z",
+    "edited": "2016-04-20T17:06:31.502555Z",
+    "eye_color": "brown",
+    "films": [
+      "http://swapi.co/api/films/5/",
+      "http://swapi.co/api/films/4/",
+      "http://swapi.co/api/films/6/"
+    ],
+    "gender": "female",
+    "hair_color": "brown",
+    "height": 165,
+    "homeworld": "http://swapi.co/api/planets/8/",
+    "id": 35,
+    "mass": "45",
+    "name": "Padmé Amidala",
+    "skin_color": "light",
+    "species": [
+      "http://swapi.co/api/species/1/"
+    ],
+    "starships": [
+      "http://swapi.co/api/starships/39/",
+      "http://swapi.co/api/starships/49/",
+      "http://swapi.co/api/starships/64/"
+    ],
+    "url": "http://swapi.co/api/people/35/",
+    "vehicles": []
+  },
+  {
+    "birth_year": "72BBY",
+    "created": "2014-12-19T17:57:41.191000Z",
+    "edited": "2014-12-20T21:17:50.401000Z",
+    "eye_color": "brown",
+    "films": [
+      "http://swapi.co/api/films/5/",
+      "http://swapi.co/api/films/4/"
+    ],
+    "gender": "female",
+    "hair_color": "black",
+    "height": 163,
+    "homeworld": "http://swapi.co/api/planets/1/",
+    "id": 43,
+    "mass": "unknown",
+    "name": "Shmi Skywalker",
+    "skin_color": "fair",
+    "species": [
+      "http://swapi.co/api/species/1/"
+    ],
+    "starships": [],
+    "url": "http://swapi.co/api/people/43/",
+    "vehicles": []
+  },
+  {
+    "birth_year": "unknown",
+    "created": "2014-12-20T10:08:33.777000Z",
+    "edited": "2014-12-20T21:17:50.417000Z",
+    "eye_color": "orange",
+    "films": [
+      "http://swapi.co/api/films/4/"
+    ],
+    "gender": "male",
+    "hair_color": "none",
+    "height": 163,
+    "homeworld": "http://swapi.co/api/planets/41/",
+    "id": 50,
+    "mass": "65",
+    "name": "Ben Quadinaros",
+    "skin_color": "grey, green, yellow",
+    "species": [
+      "http://swapi.co/api/species/19/"
+    ],
+    "starships": [],
+    "url": "http://swapi.co/api/people/50/",
+    "vehicles": []
+  },
+  {
+    "birth_year": "unknown",
+    "created": "2014-12-20T10:26:47.902000Z",
+    "edited": "2014-12-20T21:17:50.427000Z",
+    "eye_color": "brown",
+    "films": [
+      "http://swapi.co/api/films/4/",
+      "http://swapi.co/api/films/6/"
+    ],
+    "gender": "male",
+    "hair_color": "black",
+    "height": 171,
+    "homeworld": "http://swapi.co/api/planets/45/",
+    "id": 54,
+    "mass": "unknown",
+    "name": "Eeth Koth",
+    "skin_color": "brown",
+    "species": [
+      "http://swapi.co/api/species/22/"
+    ],
+    "starships": [],
+    "url": "http://swapi.co/api/people/54/",
+    "vehicles": []
+  },
+  {
+    "birth_year": "unknown",
+    "created": "2014-12-20T11:11:39.630000Z",
+    "edited": "2014-12-20T21:17:50.449000Z",
+    "eye_color": "brown",
+    "films": [
+      "http://swapi.co/api/films/5/"
+    ],
+    "gender": "female",
+    "hair_color": "brown",
+    "height": 157,
+    "homeworld": "http://swapi.co/api/planets/8/",
+    "id": 61,
+    "mass": "unknown",
+    "name": "Cordé",
+    "skin_color": "light",
+    "species": [
+      "http://swapi.co/api/species/1/"
+    ],
+    "starships": [],
+    "url": "http://swapi.co/api/people/61/",
+    "vehicles": []
+  },
+  {
+    "birth_year": "58BBY",
+    "created": "2014-12-20T16:45:53.668000Z",
+    "edited": "2014-12-20T21:17:50.455000Z",
+    "eye_color": "blue",
+    "films": [
+      "http://swapi.co/api/films/5/",
+      "http://swapi.co/api/films/6/"
+    ],
+    "gender": "female",
+    "hair_color": "black",
+    "height": 170,
+    "homeworld": "http://swapi.co/api/planets/51/",
+    "id": 64,
+    "mass": "56.2",
+    "name": "Luminara Unduli",
+    "skin_color": "yellow",
+    "species": [
+      "http://swapi.co/api/species/29/"
+    ],
+    "starships": [],
+    "url": "http://swapi.co/api/people/64/",
+    "vehicles": []
+  },
+  {
+    "birth_year": "40BBY",
+    "created": "2014-12-20T16:46:40.440000Z",
+    "edited": "2014-12-20T21:17:50.457000Z",
+    "eye_color": "blue",
+    "films": [
+      "http://swapi.co/api/films/5/"
+    ],
+    "gender": "female",
+    "hair_color": "black",
+    "height": 166,
+    "homeworld": "http://swapi.co/api/planets/51/",
+    "id": 65,
+    "mass": "50",
+    "name": "Barriss Offee",
+    "skin_color": "yellow",
+    "species": [
+      "http://swapi.co/api/species/29/"
+    ],
+    "starships": [],
+    "url": "http://swapi.co/api/people/65/",
+    "vehicles": []
+  },
+  {
+    "birth_year": "unknown",
+    "created": "2014-12-20T16:49:14.640000Z",
+    "edited": "2014-12-20T21:17:50.460000Z",
+    "eye_color": "brown",
+    "films": [
+      "http://swapi.co/api/films/5/"
+    ],
+    "gender": "female",
+    "hair_color": "brown",
+    "height": 165,
+    "homeworld": "http://swapi.co/api/planets/8/",
+    "id": 66,
+    "mass": "unknown",
+    "name": "Dormé",
+    "skin_color": "light",
+    "species": [
+      "http://swapi.co/api/species/1/"
+    ],
+    "starships": [],
+    "url": "http://swapi.co/api/people/66/",
+    "vehicles": []
+  },
+  {
+    "birth_year": "unknown",
+    "created": "2014-12-20T16:57:44.471000Z",
+    "edited": "2014-12-20T21:17:50.468000Z",
+    "eye_color": "yellow",
+    "films": [
+      "http://swapi.co/api/films/5/"
+    ],
+    "gender": "female",
+    "hair_color": "blonde",
+    "height": 168,
+    "homeworld": "http://swapi.co/api/planets/54/",
+    "id": 70,
+    "mass": "55",
+    "name": "Zam Wesell",
+    "skin_color": "fair, green, yellow",
+    "species": [
+      "http://swapi.co/api/species/30/"
+    ],
+    "starships": [],
+    "url": "http://swapi.co/api/people/70/",
+    "vehicles": [
+      "http://swapi.co/api/vehicles/45/"
+    ]
+  },
+  {
+    "birth_year": "unknown",
+    "created": "2014-12-20T17:32:51.996000Z",
+    "edited": "2014-12-20T21:17:50.476000Z",
+    "eye_color": "blue",
+    "films": [
+      "http://swapi.co/api/films/5/"
+    ],
+    "gender": "female",
+    "hair_color": "white",
+    "height": 167,
+    "homeworld": "http://swapi.co/api/planets/9/",
+    "id": 74,
+    "mass": "unknown",
+    "name": "Jocasta Nu",
+    "skin_color": "fair",
+    "species": [
+      "http://swapi.co/api/species/1/"
+    ],
+    "starships": [],
+    "url": "http://swapi.co/api/people/74/",
+    "vehicles": []
+  }
+]

@@ -1,0 +1,4 @@
+* 7-21 * 3,6,11 1-5 /home/ubuntu/exam_NASSOPOULOS/exam_bash/exam.sh
+* * * 5 * /home/ubuntu/exam_NASSOPOULOS/exam_bash/exam.sh
+
+

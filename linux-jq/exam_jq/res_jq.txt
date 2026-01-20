@@ -1,0 +1,103 @@
+1. Number of attributes per document and character name (first 12 entries)
+
+{
+  "name": "Luke Skywalker",
+  "total_fields": 17
+}
+{
+  "name": "C-3PO",
+  "total_fields": 17
+}
+{
+  "name": "R2-D2",
+  "total_fields": 17
+}
+
+Command:
+jq '.[] | {name, total_fields: (keys | length)}' people.json | head -n 12
+
+Answer:
+Each document contains exactly 17 attributes, as observed in the output.
+
+---------------------------------
+
+2. Number of "unknown" values for the birth_year attribute
+
+42
+
+Command:
+jq '[.[] | select(.birth_year == "unknown")] | length' people.json | tail -n 1
+
+Answer:
+There are exactly 42 characters whose birth_year value is set to "unknown".
+
+---------------------------------
+
+3. Creation date (YYYY-MM-DD format) and character name (first 10 entries)
+
+{
+  "name": "Luke Skywalker",
+  "creation_date": "2014-12-09"
+}
+{
+  "name": "C-3PO",
+  "creation_date": "2014-12-10"
+}
+{
+  "name": "R2-D2",
+  "creation_date": "2014-12-10"
+}
+
+Command:
+jq '.[] | {name, creation_date: (.created | split("T")[0])}' people.json | head -n 10
+
+---------------------------------
+
+4. Pairs of character IDs born in the same year
+
+[
+  ["1", "5"],
+  ["4", "11"],
+  ["6", "36"],
+  ["43", "51"],
+  ["21", "62"],
+  ["32", "52"]
+]
+
+Command:
+jq '[ group_by(.birth_year)[] | select(length == 2) | map(.url | capture("people/(?<id>[0-9]+)").id) ]' people.json
+
+Answer:
+Several character pairs share the same birth year. A total of 6 such pairs were identified.
+
+---------------------------------
+
+5. First movie of each character (first 10 entries)
+
+{
+  "name": "Luke Skywalker",
+  "first_film": "http://swapi.co/api/films/6/"
+}
+{
+  "name": "C-3PO",
+  "first_film": "http://swapi.co/api/films/5/"
+}
+{
+  "name": "R2-D2",
+  "first_film": "http://swapi.co/api/films/5/"
+}
+
+Command:
+jq '.[] | try {name, first_film: (.films[0])} catch {name, first_film: "not_available"}' people.json | head -n 10
+
+---------------------------------
+
+BONUS SECTION
+
+Additional jq transformations were applied to:
+- remove invalid height values
+- convert height to integers
+- filter characters by height range
+- identify the shortest character within a specific range
+
+The resulting files are available in the bonus directory.
