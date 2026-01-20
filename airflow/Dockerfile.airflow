@@ -1,0 +1,6 @@
+FROM apache/airflow:2.8.1 ## Base Airflow image
+.
+USER root ## Install deps once at build time (no runtime pip spam)
+RUN pip install --no-cache-dir scikit-learn ## Required for ML tasks
+.
+USER airflow ## Back to airflow user

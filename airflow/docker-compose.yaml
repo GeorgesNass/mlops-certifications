@@ -1,0 +1,186 @@
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+#
+
+# Basic Airflow cluster configuration for CeleryExecutor with Redis and PostgreSQL.
+#
+# WARNING: This configuration is for local development. Do not use it in a production deployment.
+#
+# This configuration supports basic configuration using environment variables or an .env file
+# The following variables are supported:
+#
+# AIRFLOW_IMAGE_NAME           - Docker image name used to run Airflow.
+#                                Default: apache/airflow:master-python3.8
+# AIRFLOW_UID                  - User ID in Airflow containers
+#                                Default: 50000
+# AIRFLOW_GID                  - Group ID in Airflow containers
+#                                Default: 50000
+#
+# Those configurations are useful mostly in case of standalone testing/running Airflow in test/try-out mode
+#
+# _AIRFLOW_WWW_USER_USERNAME   - Username for the administrator account (if requested).
+#                                Default: airflow
+# _AIRFLOW_WWW_USER_PASSWORD   - Password for the administrator account (if requested).
+#                                Default: airflow
+# _PIP_ADDITIONAL_REQUIREMENTS - Additional PIP requirements to add when starting all containers.
+#                                Default: ''
+#
+# Feel free to modify this file to suit your needs.
+version: "3"  # Docker Compose file format version
+
+x-airflow-common: &airflow-common
+  image: ${AIRFLOW_IMAGE_NAME:-apache/airflow:2.8.1}  # Official Airflow image (stable)
+
+  env_file:
+    - .env  # Load environment variables from .env file
+
+  environment: &airflow-common-env
+    AIRFLOW__CORE__EXECUTOR: CeleryExecutor  # Use CeleryExecutor for distributed tasks
+    AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow  # Metadata DB
+    AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://airflow:airflow@postgres/airflow  # Celery results backend
+    AIRFLOW__CELERY__BROKER_URL: redis://:@redis:6379/0  # Celery broker (Redis)
+    AIRFLOW__CORE__FERNET_KEY: ""  # Auto-generated Fernet key (local usage)
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "true"  # Pause DAGs by default
+    AIRFLOW__CORE__LOAD_EXAMPLES: "true"  # Load example DAGs (training context)
+    AIRFLOW__API__AUTH_BACKEND: "airflow.api.auth.backend.basic_auth"  # Enable basic API auth
+    AIRFLOW__SMTP__SMTP_HOST: "smtp.gmail.com"  # SMTP server
+    AIRFLOW__SMTP__SMTP_PORT: 587  # SMTP port
+    AIRFLOW__SMTP__SMTP_USER: "de.airflow@gmail.com"  # SMTP user
+    AIRFLOW__SMTP__SMTP_PASSWORD: "cfsrvkongsobheta"  # SMTP password
+    AIRFLOW__SMTP__SMTP_MAIL_FROM: "de.airflow@gmail.com"  # Sender email
+    _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:- scikit-learn}  # Extra Python deps
+    AIRFLOW_CONN_FS_DEFAULT: "fs://?extra__fs__path=%2Fopt%2Fairflow"  # Default filesystem connection for FileSensor
+
+  volumes:
+    - ./dags:/opt/airflow/dags  # DAG definitions
+    - ./logs:/opt/airflow/logs  # Airflow logs
+    - ./plugins:/opt/airflow/plugins  # Custom plugins
+    - type: bind
+      source: ./clean_data  # Cleaned datasets
+      target: /app/clean_data
+    - type: bind
+      source: ./raw_files  # Raw input data
+      target: /app/raw_files
+
+  user: "${AIRFLOW_UID:-50000}:${AIRFLOW_GID:-50000}"  # Run as non-root user
+
+  depends_on:
+    redis:
+      condition: service_healthy  # Wait for Redis
+    postgres:
+      condition: service_healthy  # Wait for PostgreSQL
+
+services:
+  postgres:
+    image: postgres:13  # PostgreSQL metadata database
+    environment:
+      POSTGRES_USER: airflow  # DB user
+      POSTGRES_PASSWORD: airflow  # DB password
+      POSTGRES_DB: airflow  # DB name
+    volumes:
+      - postgres-db-volume:/var/lib/postgresql/data  # Persist DB data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "airflow"]  # DB readiness check
+      interval: 5s
+      retries: 5
+    restart: always  # Auto-restart on failure
+
+  redis:
+    image: redis:latest  # Redis broker for Celery
+    ports:
+      - 6379:6379  # Expose Redis port
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]  # Redis health check
+      interval: 5s
+      timeout: 30s
+      retries: 50
+    restart: always
+
+  airflow-webserver:
+    <<: *airflow-common
+    command: webserver  # Start Airflow Web UI
+    ports:
+      - 8080:8080  # Expose Airflow UI
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]  # Webserver health
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    restart: always
+
+  airflow-scheduler:
+    <<: *airflow-common
+    command: scheduler  # Start DAG scheduler
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          'airflow jobs check --job-type SchedulerJob --hostname "$${HOSTNAME}"',
+        ]  # Scheduler health check
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    restart: always
+
+  airflow-worker:
+    <<: *airflow-common
+    command: celery worker  # Start Celery worker
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - 'celery --app airflow.executors.celery_executor.app inspect ping -d "celery@$${HOSTNAME}"'  # Worker health
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    restart: always
+
+  airflow-init:
+    <<: *airflow-common
+    command: version  # Init container (DB migration + user)
+    environment:
+      <<: *airflow-common-env
+      _AIRFLOW_DB_UPGRADE: "true"  # Upgrade DB schema
+      _AIRFLOW_WWW_USER_CREATE: "true"  # Create admin user
+      _AIRFLOW_WWW_USER_USERNAME: ${_AIRFLOW_WWW_USER_USERNAME:-airflow}  # Admin username
+      _AIRFLOW_WWW_USER_PASSWORD: ${_AIRFLOW_WWW_USER_PASSWORD:-airflow}  # Admin password
+
+  flower:
+    <<: *airflow-common
+    command: celery flower  # Celery monitoring UI
+    ports:
+      - 5555:5555  # Expose Flower UI
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:5555/"]  # Flower health check
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    restart: always
+
+  dashboard:
+    image: datascientest/dashapp:1.0.0  # Dash visualization app
+    volumes:
+      - type: bind
+        source: ./clean_data  # Clean data for dashboard
+        target: /app/clean_data
+      - type: bind
+        source: ./raw_files  # Raw data for dashboard
+        target: /app/raw_files
+    ports:
+      - 8050:8050  # Expose Dash UI
+
+volumes:
+  postgres-db-volume:  # Named volume for PostgreSQL persistence
