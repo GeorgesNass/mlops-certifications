@@ -1,0 +1,36 @@
+# config file for prometheus
+
+global:
+  scrape_interval: 10s ## Default scrape interval
+  scrape_timeout: 10s ## Default scrape timeout
+  evaluation_interval: 10s ## Rules evaluation interval
+
+alerting: ## Alerting config (Alertmanager)
+  alertmanagers:
+    - follow_redirects: true ## Follow HTTP redirects when calling Alertmanager
+      enable_http2: true ## Enable HTTP/2 for Alertmanager calls
+      scheme: http ## Alertmanager scheme
+      timeout: 10s ## Alertmanager request timeout
+      api_version: v2 ## Alertmanager API version
+      static_configs:
+        - targets: [] ## No Alertmanager target configured (disabled)
+
+scrape_configs:
+  - job_name: "prometheus" ## Scrape Prometheus itself
+    honor_timestamps: true ## Preserve timestamps from scraped metrics
+    scrape_interval: 10s ## Override interval for this job
+    scrape_timeout: 10s ## Override timeout for this job
+    metrics_path: /metrics ## Metrics endpoint
+    scheme: http ## Target scheme
+    follow_redirects: true ## Follow redirects when scraping
+    enable_http2: true ## Enable HTTP/2 when scraping
+    static_configs:
+      - targets:
+          - "localhost:9090" ## Prometheus container
+
+  - job_name: "fastapi" ## Scrape FastAPI /metrics
+    scrape_interval: 10s ## Scrape interval for API
+    metrics_path: /metrics ## FastAPI metrics endpoint (Instrumentator)
+    static_configs:
+      - targets:
+          - "web:8000" ## Docker Compose service name + port

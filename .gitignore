@@ -29,6 +29,9 @@ drift-monitoring/data/
 drift-monitoring/models/
 drift-monitoring/reports/
 drift-monitoring/evidently_workspace/
+prometheus-grafana/Template_MLOps_accidents/
+prometheus-grafana/tmp/
+prometheus-grafana/models/
 
 ## === Common folders and files to ignore ===
 __pycache__/

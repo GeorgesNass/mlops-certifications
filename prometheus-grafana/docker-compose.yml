@@ -1,0 +1,51 @@
+version: "3.8" ## Compose file version
+
+volumes:
+  grafana_data: {} ## Persist Grafana internal data (dashboards, users, etc.)
+
+services:
+  web:
+    build: . ## Build the local Dockerfile for the FastAPI service
+    container_name: api_template_accidents ## Fixed container name for easier discovery
+    working_dir: /usr/src/app ## Ensure commands run from the project root
+    environment:
+      - PYTHONPATH=/usr/src/app ## Allow `import src...` from project root
+    command:
+      - uvicorn
+      - main:app
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8000"
+      - --log-level
+      - warning ## Disable noisy logs, keep warnings/errors only
+    volumes:
+      - ./src:/usr/src/app/src ## Mount only the code (avoid overwriting built models/)
+      - ./main.py:/usr/src/app/main.py ## Mount entrypoint for reload
+    ports:
+      - "8000:8000" ## Expose FastAPI on localhost:8000
+
+  prometheus:
+    image: prom/prometheus ## Official Prometheus image
+    container_name: prometheus_template_accidents ## Fixed container name for easier discovery
+    ports:
+      - "9090:9090" ## Expose Prometheus on localhost:9090
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml ## Mount Prometheus config file
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml" ## Use the mounted config
+    depends_on:
+      - web ## Ensure the API container is started before Prometheus
+
+  grafana:
+    image: grafana/grafana ## Official Grafana image
+    container_name: grafana_template_accidents ## Fixed container name for easier discovery
+    environment:
+      - GF_LOG_MODE=file ## Terminal clean: write logs to file instead of stdout
+      - GF_LOG_LEVEL=warn ## Reduce verbosity (hide info migration spam) ## For no logs in terminal GF_LOG_LEVEL=error
+    ports:
+      - "3000:3000" ## Expose Grafana on localhost:3000
+    volumes:
+      - grafana_data:/var/lib/grafana ## Persist Grafana data
+    depends_on:
+      - prometheus ## Ensure Prometheus is started before Grafana
