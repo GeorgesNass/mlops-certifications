@@ -1,0 +1,46 @@
+## =============================================================================
+## [LEGACY] Static PV using hostPath (NOT recommended for Minikube docker driver)
+## =============================================================================
+## Use this only if you fully control the node filesystem and want static PVs.
+## For Minikube, prefer dynamic provisioning via StorageClass "standard".
+## =============================================================================
+
+## =============================================================================
+## PersistentVolume (Local storage for MySQL)
+## =============================================================================
+## This PersistentVolume provides local disk storage for the MySQL StatefulSet.
+##
+## IMPORTANT:
+## - Uses hostPath (node-local storage)
+## - Suitable for exams, demos, and local clusters (k3s / kind / minikube)
+## - NOT suitable for production multi-node clusters
+## =============================================================================
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-local-pv
+  namespace: examen-k8s  ## Namespace where the PV is defined
+spec:
+  ## Storage capacity available on the node
+  capacity:
+    storage: 1Gi
+
+  ## Access mode:
+  ## - ReadWriteOnce = mounted by a single node
+  accessModes:
+    - ReadWriteOnce
+
+  ## Reclaim policy:
+  ## - Retain keeps data after PVC deletion (safe for exams/debug)
+  persistentVolumeReclaimPolicy: Retain
+
+  ## Storage class:
+  ## - Must match the PVC storageClassName (or be empty on both sides)
+  storageClassName: local-path
+
+  ## Local storage configuration
+  ## Data is stored directly on the Kubernetes node filesystem
+  hostPath:
+    path: /mnt/data/mysql
+    type: DirectoryOrCreate

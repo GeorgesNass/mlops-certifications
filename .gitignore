@@ -32,6 +32,9 @@ drift-monitoring/evidently_workspace/
 prometheus-grafana/Template_MLOps_accidents/
 prometheus-grafana/tmp/
 prometheus-grafana/models/
+kubernetes/tmp/
+kubernetes/minikube-linux-amd64
+kubernetes/kubectl
 
 ## === Common folders and files to ignore ===
 __pycache__/

@@ -1,0 +1,100 @@
+## =============================================================================
+## MySQL StatefulSet (Kubernetes) — Minikube-friendly
+## =============================================================================
+## - Uses StatefulSet for stable identity (mysql-0)
+## - Uses dynamic provisioning via StorageClass "standard" (Minikube default)
+## - Credentials come from Kubernetes Secrets
+## =============================================================================
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+  namespace: examen-k8s
+spec:
+  ## Headless service name used by the StatefulSet network identity
+  serviceName: mysql
+
+  ## Single instance (exam/demo)
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: mysql
+
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          ## Use a stable MySQL tag (avoid surprises in exams)
+          image: mysql:8.0
+          imagePullPolicy: IfNotPresent
+
+          ports:
+            - containerPort: 3306
+              name: mysql
+
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-root-password
+                  key: password
+
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-user
+                  key: database
+
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-user
+                  key: user
+
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-user
+                  key: password
+
+          volumeMounts:
+            - name: mysql-data
+              mountPath: /var/lib/mysql
+
+          ## Optional but recommended (prevents silent OOM scheduling issues)
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "1Gi"
+
+          ## Optional probes (can be added later if you want)
+          livenessProbe:
+            tcpSocket:
+              port: 3306
+            initialDelaySeconds: 30
+            periodSeconds: 10
+
+          readinessProbe:
+            tcpSocket:
+              port: 3306
+            initialDelaySeconds: 15
+            periodSeconds: 5
+
+  volumeClaimTemplates:
+    - metadata:
+        name: mysql-data
+      spec:
+        ## Critical for Minikube: dynamic hostPath provisioning
+        storageClassName: standard
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 2Gi

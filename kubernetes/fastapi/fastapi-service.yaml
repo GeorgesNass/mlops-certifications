@@ -1,0 +1,22 @@
+## -----------------------------------------------------------------------------
+## FastAPI Service (Kubernetes)
+## -----------------------------------------------------------------------------
+## - Exposes the FastAPI application inside the cluster
+## - Routes traffic to pods labeled app=fastapi
+## - Uses ClusterIP (default) for internal access
+## -----------------------------------------------------------------------------
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: fastapi-service
+  namespace: examen-k8s  ## Namespace where the service is created
+spec:
+  type: ClusterIP        ## Internal service (use port-forward or Ingress to access)
+  selector:
+    app: fastapi         ## Must match the pod label in the Deployment
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8000         ## Service port inside the cluster
+      targetPort: 8000   ## Container port exposed by FastAPI

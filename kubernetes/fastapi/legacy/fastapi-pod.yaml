@@ -1,0 +1,56 @@
+## -----------------------------------------------------------------------------
+## FastAPI Pod (LEGACY / DEBUG ONLY)
+## -----------------------------------------------------------------------------
+## This file is kept for learning and debugging purposes.
+## It should NOT be used in production or exams.
+##
+## Key limitations:
+## - Single pod (no replicas)
+## - No self-healing if the pod crashes
+## - No rolling updates
+##
+## Preferred resource: Deployment (fastapi-deployment.yaml)
+## -----------------------------------------------------------------------------
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fastapi-pod
+  namespace: examen-k8s  ## Namespace where the pod runs
+  labels:
+    app: fastapi         ## Label used by Service selector (if applied)
+spec:
+  containers:
+    - name: fastapi      ## Container name
+      image: georgesnassopoulos/k8s-dst-eval-fastapi:latest
+      imagePullPolicy: Always
+
+      ## Start FastAPI using Uvicorn
+      command: ["uvicorn"]
+      args: ["main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+      ports:
+        - containerPort: 8000  ## FastAPI listening port
+
+      ## Environment variables for MySQL connection
+      ## Same variables as used in the Deployment
+      env:
+        - name: MYSQL_HOST
+          value: "mysql"       ## MySQL Service name
+        - name: MYSQL_PORT
+          value: "3307"        ## MySQL Service port
+        - name: MYSQL_USER
+          value: "root"
+        - name: MYSQL_PASSWORD
+          value: "RootPass123"
+        - name: MYSQL_DATABASE
+          value: "mydb"
+
+      ## Resource limits (minimal, non-production)
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "128Mi"
+        limits:
+          cpu: "300m"
+          memory: "256Mi"

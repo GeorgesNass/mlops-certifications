@@ -1,0 +1,20 @@
+## =============================================================================
+## MySQL Service (ClusterIP)
+## =============================================================================
+## - Exposes MySQL internally inside the cluster
+## - Port 3307 is the Service port (maps to container 3306)
+## =============================================================================
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  namespace: examen-k8s
+spec:
+  selector:
+    app: mysql
+  type: ClusterIP
+  ports:
+    - name: mysql
+      port: 3307
+      targetPort: 3306
