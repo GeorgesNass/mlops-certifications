@@ -35,6 +35,8 @@ prometheus-grafana/models/
 kubernetes/tmp/
 kubernetes/minikube-linux-amd64
 kubernetes/kubectl
+fastapi/tmp/
+fastapi/.fastapi_env/
 
 ## === Common folders and files to ignore ===
 __pycache__/

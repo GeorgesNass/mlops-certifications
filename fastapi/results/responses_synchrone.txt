@@ -1,0 +1,65 @@
+
+--- Requete 1 ---
+HTTP/1.1 200 OK
+date: Wed, 21 May 2025 22:11:08 GMT
+server: uvicorn
+content-length: 38
+content-type: application/json
+
+{"message":"L'API est fonctionnelle."}
+--- Requete 2 ---
+HTTP/1.1 200 OK
+date: Wed, 21 May 2025 22:11:08 GMT
+server: uvicorn
+content-length: 371
+content-type: application/json
+
+{"quiz":[{"question":"Quelle métrique est utilisée en classification ?","propositions":{"A":"Le F1-score","B":"Le RMSE","C":"La perplexité"},"reponse":"A"},{"question":"Lequel de ces problème est un problème de classification","propositions":{"A":"Labellisation d’une image","B":"Reconnaissance d’objet","C":"Génération automatique de mots"},"reponse":"B,C"}]}
+--- Requete 3 ---
+HTTP/1.1 200 OK
+date: Wed, 21 May 2025 22:11:08 GMT
+server: uvicorn
+content-length: 75
+content-type: application/json
+
+{"message":"Question creee avec succes et sauvegardee dans questions.csv."}
+--- Requete 4 ---
+HTTP/1.1 500 Internal Server Error
+date: Wed, 21 May 2025 22:11:08 GMT
+server: uvicorn
+content-length: 180
+content-type: application/json
+
+{"error":"404: {'error': 'Aucune question trouvee.', 'message': 'Erreur HTTP detectee a 2025-05-21T22:11:08.416048'}","message":"Erreur HTTP detectee a 2025-05-21T22:11:08.416313"}
+--- Requete 5 ---
+HTTP/1.1 500 Internal Server Error
+date: Wed, 21 May 2025 22:11:08 GMT
+server: uvicorn
+content-length: 180
+content-type: application/json
+
+{"error":"404: {'error': 'Aucune question trouvee.', 'message': 'Erreur HTTP detectee a 2025-05-21T22:11:08.431927'}","message":"Erreur HTTP detectee a 2025-05-21T22:11:08.432053"}
+--- Requete 6 ---
+HTTP/1.1 401 Unauthorized
+date: Wed, 21 May 2025 22:11:08 GMT
+server: uvicorn
+content-length: 163
+content-type: application/json
+
+{"url":"http://localhost:8000/generate_quiz","name":"Unauthorized","message":"Acces non autorise. Veuillez vous authentifier.","date":"2025-05-21 22:11:08.447116"}
+--- Requete 7 ---
+HTTP/1.1 422 Unprocessable Entity
+date: Wed, 21 May 2025 22:11:08 GMT
+server: uvicorn
+content-length: 203
+content-type: application/json
+
+{"error":[{"type":"json_invalid","loc":["body",1],"msg":"JSON decode error","input":{},"ctx":{"error":"Expecting property name enclosed in double quotes"}}],"message":"Erreur de validation des donnees."}
+--- Requete 8 ---
+HTTP/1.1 500 Internal Server Error
+date: Wed, 21 May 2025 22:11:08 GMT
+server: uvicorn
+content-length: 180
+content-type: application/json
+
+{"error":"404: {'error': 'Aucune question trouvee.', 'message': 'Erreur HTTP detectee a 2025-05-21T22:11:08.477882'}","message":"Erreur HTTP detectee a 2025-05-21T22:11:08.478124"}

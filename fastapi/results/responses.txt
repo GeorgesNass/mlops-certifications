@@ -1,0 +1,88 @@
+===== Request 1 =====
+Command: curl -X GET -i http://localhost:8000/verify
+---------------------------
+HTTP/1.1 200 OK
+date: Fri, 23 Jan 2026 15:28:23 GMT
+server: uvicorn
+content-length: 29
+content-type: application/json
+
+{"message":"API is running."}
+
+===== Request 2 =====
+Command: curl -X POST -i http://localhost:8000/generate_quiz -H "Authorization: Basic Ym9iOmJ1aWxkZXI=" -H "Content-Type: application/json" -d '{"test_type": "Test de validation", "categories": ["Classification"], "number_of_questions": 2}'
+---------------------------
+HTTP/1.1 401 Unauthorized
+date: Fri, 23 Jan 2026 15:28:24 GMT
+server: uvicorn
+content-length: 91
+content-type: application/json
+
+{"error":"Not authenticated","message":"HTTP error detected at 2026-01-23T16:28:24.879047"}
+
+===== Request 3 =====
+Command: curl -X POST -i http://localhost:8000/create_question -H "Content-Type: application/json" -d '{"admin_username": "admin", "admin_password": "4dm1N", "question": "Quel est le rôle de Docker ?", "subject": "Docker", "correct": ["Isolation"], "use": "multiple_choice", "responseA": "Compilation", "responseB": "Isolation", "responseC": "Ordonnancement", "responseD": "Sécurité"}'
+---------------------------
+HTTP/1.1 422 Unprocessable Entity
+date: Fri, 23 Jan 2026 15:28:24 GMT
+server: uvicorn
+content-length: 122
+content-type: application/json
+
+{"error":[{"loc":["body"],"msg":"value is not a valid dict","type":"type_error.dict"}],"message":"Data validation error."}
+
+===== Request 4 =====
+Command: curl -X POST -i http://localhost:8000/generate_quiz -H "Authorization: Basic Ym9iOmJ1aWxkZXI=" -H "Content-Type: application/json" -d '{"test_type": "multiple_choice", "categories": ["math"], "number_of_questions": 2}'
+---------------------------
+HTTP/1.1 401 Unauthorized
+date: Fri, 23 Jan 2026 15:28:24 GMT
+server: uvicorn
+content-length: 91
+content-type: application/json
+
+{"error":"Not authenticated","message":"HTTP error detected at 2026-01-23T16:28:25.435198"}
+
+===== Request 5 =====
+Command: curl -X POST -i http://localhost:8000/generate_quiz -H "Authorization: Basic YWxpY2U6d29uZGVybGFuZA==" -H "Content-Type: application/json" -d '{"test_type": "multiple_choice", "categories": ["science"], "number_of_questions": 1}'
+---------------------------
+HTTP/1.1 401 Unauthorized
+date: Fri, 23 Jan 2026 15:28:24 GMT
+server: uvicorn
+content-length: 91
+content-type: application/json
+
+{"error":"Not authenticated","message":"HTTP error detected at 2026-01-23T16:28:25.679292"}
+
+===== Request 6 =====
+Command: curl -X POST -i http://localhost:8000/generate_quiz -H "Authorization: Basic d3Jvbmc6dXNlcg==" -H "Content-Type: application/json" -d '{"test_type": "multiple_choice", "categories": ["BDD"], "number_of_questions": 1}'
+---------------------------
+HTTP/1.1 401 Unauthorized
+date: Fri, 23 Jan 2026 15:28:25 GMT
+server: uvicorn
+content-length: 91
+content-type: application/json
+
+{"error":"Not authenticated","message":"HTTP error detected at 2026-01-23T16:28:25.918279"}
+
+===== Request 7 =====
+Command: curl -X POST -i http://localhost:8000/generate_quiz -H "Authorization: Basic Ym9iOmJ1aWxkZXI=" -H "Content-Type: application/json" -d '{test_type: multiple_choice, categories: ["BDD"], number_of_questions: 1}'
+---------------------------
+HTTP/1.1 401 Unauthorized
+date: Fri, 23 Jan 2026 15:28:25 GMT
+server: uvicorn
+content-length: 91
+content-type: application/json
+
+{"error":"Not authenticated","message":"HTTP error detected at 2026-01-23T16:28:26.153498"}
+
+===== Request 8 =====
+Command: curl -X POST -i http://localhost:8000/generate_quiz -H "Authorization: Basic YWxpY2U6d29uZGVybGFuZA==" -H "Content-Type: application/json" -d '{"test_type": "multiple_choice", "categories": ["xxyyzz"], "number_of_questions": 1}'
+---------------------------
+HTTP/1.1 401 Unauthorized
+date: Fri, 23 Jan 2026 15:28:25 GMT
+server: uvicorn
+content-length: 91
+content-type: application/json
+
+{"error":"Not authenticated","message":"HTTP error detected at 2026-01-23T16:28:26.408120"}
+
