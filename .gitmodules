@@ -1,0 +1,3 @@
+[submodule "dvc-dagshub"]
+	path = dvc-dagshub
+	url = https://dagshub.com/GeorgesNass/flotation-dvc.git
