@@ -1,0 +1,9 @@
+/venv
+/clean_data.csv
+dvc_env/
+logs/
+__pycache__/
+*.pyc
+/metrics.json
+/gridsearch_results.csv
+/gridsearch_summary.json

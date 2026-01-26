@@ -1,0 +1,57 @@
+stages:
+  split_data:
+    cmd: python src/data/split_data.py
+    deps:
+    - data/raw/raw.csv
+    - src/data/split_data.py
+    outs:
+    - data/processed/X_test.pkl
+    - data/processed/X_train.pkl
+    - data/processed/split_info.json
+    - data/processed/y_test.pkl
+    - data/processed/y_train.pkl
+  normalize_data:
+    cmd: python src/data/normalize_data.py
+    deps:
+    - data/processed/X_test.pkl
+    - data/processed/X_train.pkl
+    - src/data/normalize_data.py
+    outs:
+    - data/processed/X_test_scaled.pkl
+    - data/processed/X_train_scaled.pkl
+    - data/processed/normalize_info.json
+    - models/data/scaled_columns.json
+    - models/data/scaler.pkl
+    - models/data/scaler_stats.json
+  gridsearch_model:
+    cmd: python src/models/gridsearch_model.py
+    deps:
+    - data/processed/X_train_scaled.pkl
+    - data/processed/y_train.pkl
+    - src/models/gridsearch_model.py
+    outs:
+    - models/data/best_params.pkl
+    - models/data/gridsearch_plot.png
+    - models/data/gridsearch_results.csv
+    - models/data/gridsearch_summary.json
+    params:
+    - gridsearch.alpha_values
+  train_model:
+    cmd: python src/models/train_model.py
+    deps:
+    - data/processed/X_train_scaled.pkl
+    - data/processed/y_train.pkl
+    - models/data/best_params.pkl
+    - src/models/train_model.py
+  evaluate_model:
+    cmd: python src/models/evaluate_model.py
+    deps:
+    - data/processed/X_test_scaled.pkl
+    - data/processed/y_test.pkl
+    - models/models/final_model.pkl
+    - src/models/evaluate_model.py
+    outs:
+    - metrics.json
+    - models/models/eval_metadata.json
+    - models/models/residuals_hist.png
+    - models/models/test_predictions.csv

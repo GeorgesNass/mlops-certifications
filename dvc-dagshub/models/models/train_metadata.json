@@ -1,0 +1,23 @@
+{
+    "model_type": "Ridge",
+    "best_params": {
+        "alpha": 10.0
+    },
+    "random_seed": 42,
+    "training_samples": 1453,
+    "features": [
+        "ave_flot_air_flow",
+        "ave_flot_level",
+        "iron_feed",
+        "starch_flow",
+        "amina_flow",
+        "ore_pulp_flow",
+        "ore_pulp_pH",
+        "ore_pulp_density"
+    ],
+    "model_md5": "5070d35bb4b17ac078ff731772b65c59",
+    "train_metrics": {
+        "mse": 0.935979260781319,
+        "r2": 0.16407066883860044
+    }
+}
